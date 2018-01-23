@@ -1,7 +1,7 @@
-import JQ from "jquery/dist/jquery.js";
+import $ from "jquery/dist/jquery.js";
 import css from './index.css';
-window.JQ = JQ
+window.$ = $
 
-JQ(() => {
-  JQ('body').css({color:'red'})
+$(() => {
+  $('body').css({color:'red'})
 })
