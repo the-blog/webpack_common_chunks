@@ -1,7 +1,7 @@
 module.exports = {
   watch: true,
 
-  entry: './index.js',
+  entry: './assets/index.js',
 
   output: {
     filename: 'bundle.js'
