@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
@@ -10,7 +11,12 @@ module.exports = {
   },
 
   plugins: [
-    new UglifyJsPlugin()
+    new UglifyJsPlugin(),
+
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
 
   module: {
@@ -18,6 +24,10 @@ module.exports = {
       {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
       }
     ]
   }

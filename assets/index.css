@@ -2,7 +2,7 @@
   display: none
 }
 
-#show_slider {
+#show_slider, #show_gallery {
   margin: 10px;
   padding: 10px;
   border: 2px solid red;
