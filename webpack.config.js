@@ -1,3 +1,5 @@
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 module.exports = {
   watch: true,
 
@@ -6,6 +8,10 @@ module.exports = {
   output: {
     filename: 'bundle.js'
   },
+
+  plugins: [
+    new UglifyJsPlugin()
+  ],
 
   module: {
     rules: [
