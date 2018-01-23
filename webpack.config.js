@@ -1,13 +1,19 @@
+const path = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   watch: true,
 
-  entry: './assets/index.js',
+  entry: {
+    index: './assets/index.js',
+    rangeslider: './assets/rangeslider.js',
+    fotorama: './assets/fotorama.js'
+  },
 
   output: {
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'bundles'),
+    filename: "[name].js"
   },
 
   plugins: [
@@ -16,6 +22,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "commonChank",
+      chunks: ["index", "rangeslider", "fotorama"],
+      minChunks: 3
     })
   ],
 
