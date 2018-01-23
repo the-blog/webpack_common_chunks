@@ -4,4 +4,9 @@ window.$ = $
 
 $(() => {
   $('body').css({color:'red'})
+
+  $('#show_slider').click(() => {
+    $('#slider').show()
+    $('#show_slider').hide()
+  })
 })
