@@ -1,12 +1,18 @@
 import $ from "jquery/dist/jquery.js";
-import css from './index.css';
 window.$ = $
+
+import css from './index.css';
+
+import _ from "rangeslider.js";
+import _ from "rangeslider.js/dist/rangeslider.css";
 
 $(() => {
   $('body').css({color:'red'})
 
   $('#show_slider').click(() => {
-    $('#slider').show()
     $('#show_slider').hide()
+    $('#slider_block').show()
+
+    $('#slider').rangeslider({polyfill: false})
   })
 })
