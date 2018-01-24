@@ -4,6 +4,9 @@ import $ from "jquery/dist/jquery.js";
 window.$ = $
 
 import _ from './index.css';
+
+// If I use css importing here - it works fine
+// And it doesn't work when I move this stuff it to corresponding chunks
 import _ from "fotorama/fotorama.css";
 import _ from "rangeslider.js/dist/rangeslider.css";
 

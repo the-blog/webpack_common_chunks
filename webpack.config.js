@@ -26,7 +26,7 @@ module.exports = {
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: "commonChank",
+      name: "commonChunk",
       chunks: ["index", "rangeslider", "fotorama"],
       minChunks: 3
     })
