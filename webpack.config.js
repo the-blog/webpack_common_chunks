@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const AssetsPlugin = require('assets-webpack-plugin')
 
 module.exports = {
   watch: true,
@@ -14,7 +15,7 @@ module.exports = {
   output: {
     publicPath: './bundles/',
     path: path.join(__dirname, 'bundles'),
-    filename: "[name].js"
+    filename: "[name].[chunkhash].js"
   },
 
   plugins: [
@@ -27,9 +28,12 @@ module.exports = {
 
     new webpack.optimize.CommonsChunkPlugin({
       name: "commonChunk",
+      filename: "[name].[chunkhash].js",
       chunks: ["index", "rangeslider", "fotorama"],
       minChunks: 3
-    })
+    }),
+
+    new AssetsPlugin()
   ],
 
   module: {
