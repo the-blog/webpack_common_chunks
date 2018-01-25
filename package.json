@@ -2,6 +2,8 @@
   "dependencies": {
     "assets-webpack-plugin": "^3.5.1",
     "css-loader": "^0.28.9",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
     "fotorama": "^4.6.4",
     "jquery": "^3.3.1",
     "rangeslider.js": "^2.3.2",
@@ -11,8 +13,10 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start": "yarn clean_bundles && yarn run_dev",
+    "start": "yarn clean_bundles && yarn run_webpack",
+
     "clean_bundles": "rm -rf ./bundles",
-    "run_dev": "env NODE_ENV=development node ./node_modules/webpack/bin/webpack.js"
+    "run_server": "node web_server.js",
+    "run_webpack": "env NODE_ENV=development node ./node_modules/webpack/bin/webpack.js"
   }
 }

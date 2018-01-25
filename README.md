@@ -7,4 +7,4 @@ The playground to check current capabilities of WebPack and related stuff.
 1. cd projectFolder
 2. yarn install
 3. yarn start
-4. open index.html
+4. open localhost:5000
