@@ -1,11 +1,19 @@
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 const app = express()
 
 const PORT_NUMBER = 5000
 
 app.set('view engine', 'ejs')
 app.locals.greetings = "Hello World!"
+
+app.locals.webpackChunkPath = function(chunkName) {
+  const webpackAssetsFile = 'webpack-assets.json'
+  const webpackAssetsFilePath = path.join(__dirname + '/' + webpackAssetsFile)
+  const obj = JSON.parse(fs.readFileSync(webpackAssetsFilePath, 'utf8'))
+  return obj[chunkName]['js']
+}
 
 function viewFilePath(file_name) {
   return path.join(__dirname + '/' + file_name)
