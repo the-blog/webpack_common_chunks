@@ -9,3 +9,15 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+#show_gallery {
+  color: white;
+  background: #1e5799;
+  border: 2px solid lightgray;
+  background: linear-gradient(to bottom,
+    #1e5799 0%,
+    #2989d8 50%,
+    #207cca 51%,
+    #7db9e8 100%
+  );
+}
