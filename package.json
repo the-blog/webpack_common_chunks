@@ -10,11 +10,11 @@
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.6.2",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.9.2"
   },
   "scripts": {
     "start": "yarn clean_bundles && yarn webpack",
-
     "clean_bundles": "rm -rf ./bundles",
     "server": "node web_server.js",
     "webpack": "env NODE_ENV=development node ./node_modules/webpack/bin/webpack.js"

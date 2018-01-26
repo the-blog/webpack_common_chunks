@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   watch: true,
@@ -38,7 +39,8 @@ module.exports = {
       minChunks: 3
     }),
 
-    new AssetsPlugin()
+    new AssetsPlugin(),
+    new BundleAnalyzerPlugin()
   ],
 
   module: {
