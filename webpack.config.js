@@ -4,6 +4,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const CSS_SOURCE_MAP = false
+
 module.exports = {
   watch: true,
 
@@ -48,9 +50,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader', options: { sourceMap: true } },
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'postcss-loader', options: { sourceMap: true } }
+          { loader: 'style-loader', options: { sourceMap: CSS_SOURCE_MAP } },
+          { loader: 'css-loader', options: { sourceMap: CSS_SOURCE_MAP } },
+          { loader: 'postcss-loader', options: { sourceMap: CSS_SOURCE_MAP } }
         ]
       },
 
