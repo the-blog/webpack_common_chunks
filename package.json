@@ -16,7 +16,7 @@
     "start": "yarn clean_bundles && yarn run_webpack",
 
     "clean_bundles": "rm -rf ./bundles",
-    "run_server": "node web_server.js",
-    "run_webpack": "env NODE_ENV=development node ./node_modules/webpack/bin/webpack.js"
+    "web_server": "node web_server.js",
+    "webpack": "env NODE_ENV=development node ./node_modules/webpack/bin/webpack.js"
   }
 }

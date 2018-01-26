@@ -2,9 +2,10 @@ const express = require('express')
 const path = require('path')
 const app = express()
 
-app.set('view engine', 'ejs');
-
 const PORT_NUMBER = 5000
+
+app.set('view engine', 'ejs')
+app.locals.greetings = "Hello World!"
 
 function file_path_for(file_name) {
   return path.join(__dirname + '/' + file_name)
