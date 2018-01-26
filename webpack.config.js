@@ -27,6 +27,11 @@ module.exports = {
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      minChunks: Infinity
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
       name: "commonChunk",
       filename: "[name].[chunkhash].js",
       chunks: ["index", "rangeslider", "fotorama"],
