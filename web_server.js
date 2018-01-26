@@ -7,6 +7,7 @@ const PORT_NUMBER = 5000
 
 app.set('view engine', 'ejs')
 app.locals.greetings = "Hello World!"
+app.use('/bundles', express.static(path.join(__dirname, 'bundles')))
 
 app.locals.webpackChunkPath = function(chunkName) {
   const webpackAssetsFile = 'webpack-assets.json'
