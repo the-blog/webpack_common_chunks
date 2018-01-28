@@ -1,4 +1,4 @@
 import './vendors/JQuery'
 
-import _ from "rangeslider.js";
-import _ from "rangeslider.js/dist/rangeslider.css";
+import "rangeslider.js"
+import "rangeslider.js/dist/rangeslider.css"

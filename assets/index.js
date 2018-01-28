@@ -1,4 +1,4 @@
-import _ from './index.css';
+import './index.css'
 
 setTimeout(_ => {
   import('./app')
