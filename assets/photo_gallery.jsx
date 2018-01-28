@@ -1,9 +1,10 @@
 import '@fotorama'
 import { React, ReactDOM } from '@react'
+import css from './photo_gallery.jss'
 
 class PhotoGallery extends React.Component {
   render () {
-    return <div id='gallery'>
+    return <div class={css.gallery} id='gallery'>
       <img src='http://s.fotorama.io/1.jpg' />
       <img src='http://s.fotorama.io/2.jpg' />
       <img src='http://s.fotorama.io/3.jpg' />

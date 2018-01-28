@@ -69,11 +69,46 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.jss$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: { sourceMap: CSS_SOURCE_MAP }
+          },
+
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: CSS_SOURCE_MAP,
+              localIdentName: '[hash:base64:5]'
+            }
+          },
+
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: CSS_SOURCE_MAP }
+          }
+        ]
+      },
+
+      {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader', options: { sourceMap: CSS_SOURCE_MAP } },
-          { loader: 'css-loader', options: { sourceMap: CSS_SOURCE_MAP } },
-          { loader: 'postcss-loader', options: { sourceMap: CSS_SOURCE_MAP } }
+          {
+            loader: 'style-loader',
+            options: { sourceMap: CSS_SOURCE_MAP }
+          },
+
+          {
+            loader: 'css-loader',
+            options: { sourceMap: CSS_SOURCE_MAP }
+          },
+
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: CSS_SOURCE_MAP }
+          }
         ]
       },
 
@@ -84,7 +119,7 @@ module.exports = {
 
       {
         test : /\.jsx?/,
-        exclude: /\.css/,
+        exclude: /\.css|jss/,
         loader : 'babel-loader'
       }
     ]
