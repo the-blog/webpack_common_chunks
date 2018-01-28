@@ -1,6 +1,4 @@
-import './vendors/JQuery'
+import "./JQuery"
 
 import "fotorama/fotorama.js"
 import "fotorama/fotorama.css"
-
-import "./photo_gallery.jsx"

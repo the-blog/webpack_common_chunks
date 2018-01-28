@@ -6,7 +6,7 @@ $(() => {
   $('#show_gallery').click(() => {
     $('#show_gallery').hide()
 
-    import("./fotorama.js").then(_ => {
+    import("./photo_gallery.jsx").then(_ => {
       $('#gallery_block').show()
       $('#gallery').fotorama()
     })
@@ -15,7 +15,7 @@ $(() => {
   $('#show_slider').click(() => {
     $('#show_slider').hide()
 
-    import("./rangeslider.js").then(_ => {
+    import("./vendors/rangeslider.js").then(_ => {
       $('#slider_block').show()
       $('#slider').rangeslider({polyfill: false})
     })

@@ -1,3 +1,4 @@
+import './vendors/fotorama.js'
 import { React, ReactDOM } from './vendors/React'
 
 class PhotoGallery extends React.Component {
