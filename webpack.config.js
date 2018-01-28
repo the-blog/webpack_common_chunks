@@ -35,15 +35,22 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
+    // https://github.com/webpack/webpack/issues/4638
     new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest",
-      minChunks: Infinity
+        async: 'jquery',
+        children: true,
+        minChunks: (m) => /node_modules\/(?:jquery|react)/.test(m.context)
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
-      async: 'asyncCommonChunk',
-      children: true,
-      minChunks: 2
+        async: 'react',
+        children: true,
+        minChunks: (m) => /node_modules\/(?:react)/.test(m.context)
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      minChunks: Infinity
     }),
 
     new AssetsPlugin(),
