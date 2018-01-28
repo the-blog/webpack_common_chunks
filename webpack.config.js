@@ -10,9 +10,7 @@ module.exports = {
   watch: true,
 
   entry: {
-    index: './assets/index.js',
-    rangeslider: './assets/rangeslider.js',
-    fotorama: './assets/fotorama.js'
+    index: './assets/index.js'
   },
 
   output: {
@@ -35,10 +33,9 @@ module.exports = {
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: "commonChunk",
-      filename: "[name].[chunkhash].js",
-      chunks: ["index", "rangeslider", "fotorama"],
-      minChunks: 3
+      async: 'asyncCommonChunk',
+      children: true,
+      minChunks: 2
     }),
 
     new AssetsPlugin(),

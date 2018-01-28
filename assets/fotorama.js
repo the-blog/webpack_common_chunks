@@ -1,3 +1,4 @@
-import $ from "jquery/dist/jquery.js";
+import './vendors/JQuery'
+
 import _ from "fotorama/fotorama.js";
 import _ from "fotorama/fotorama.css";
