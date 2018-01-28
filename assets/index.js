@@ -1,5 +1,5 @@
 import _ from './index.css';
 
-import('./app')
-import('./rangeslider')
-import('./fotorama')
+setTimeout(_ => {
+  import('./app')
+}, 5000)
