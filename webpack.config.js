@@ -19,6 +19,15 @@ module.exports = {
     filename: "[name].[chunkhash].js"
   },
 
+  resolve : {
+    alias: {
+      '@jquery': path.join(__dirname, "/assets/vendors/JQuery"),
+      '@react': path.join(__dirname, "/assets/vendors/React"),
+      '@fotorama': path.join(__dirname, "/assets/vendors/fotorama"),
+      '@rangeslider': path.join(__dirname, "/assets/vendors/rangeslider")
+    }
+  },
+
   plugins: [
     new UglifyJsPlugin(),
 

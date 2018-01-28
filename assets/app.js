@@ -1,4 +1,4 @@
-import $ from './vendors/JQuery'
+import $ from '@jquery'
 
 $(() => {
   $('body').css({color:'red'})
@@ -15,7 +15,7 @@ $(() => {
   $('#show_slider').click(() => {
     $('#show_slider').hide()
 
-    import("./vendors/rangeslider.js").then(_ => {
+    import("@rangeslider").then(_ => {
       $('#slider_block').show()
       $('#slider').rangeslider({polyfill: false})
     })

@@ -1,5 +1,5 @@
-import './vendors/fotorama.js'
-import { React, ReactDOM } from './vendors/React'
+import '@fotorama'
+import { React, ReactDOM } from '@react'
 
 class PhotoGallery extends React.Component {
   render () {
