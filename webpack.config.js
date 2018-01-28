@@ -20,11 +20,17 @@ module.exports = {
   },
 
   plugins: [
-    // new UglifyJsPlugin(),
+    new UglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
     }),
 
     new webpack.HashedModuleIdsPlugin(),
