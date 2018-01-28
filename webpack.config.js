@@ -80,6 +80,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
+              importLoaders: 1,
               sourceMap: CSS_SOURCE_MAP,
               localIdentName: '[hash:base64:5]'
             }
@@ -102,7 +103,10 @@ module.exports = {
 
           {
             loader: 'css-loader',
-            options: { sourceMap: CSS_SOURCE_MAP }
+            options: {
+              sourceMap: CSS_SOURCE_MAP,
+              importLoaders: 1
+            }
           },
 
           {
