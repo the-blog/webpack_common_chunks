@@ -20,12 +20,14 @@ module.exports = {
   },
 
   plugins: [
-    new UglifyJsPlugin(),
+    // new UglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
+
+    new webpack.HashedModuleIdsPlugin(),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: "manifest",
