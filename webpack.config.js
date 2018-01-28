@@ -61,7 +61,8 @@ module.exports = {
       },
 
       {
-        test : /\.jsx/,
+        test : /\.jsx?/,
+        exclude: /\.css/,
         loader : 'babel-loader'
       }
     ]
