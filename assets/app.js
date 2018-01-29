@@ -6,7 +6,7 @@ $(() => {
   $('#show_gallery').click(() => {
     $('#show_gallery').hide()
 
-    import("./photo_gallery.jsx").then(_ => {
+    import("@components/photo_gallery").then(_ => {
       $('#gallery_block').show()
       $('#gallery').fotorama()
     })

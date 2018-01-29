@@ -24,7 +24,8 @@ module.exports = {
       '@jquery': path.join(__dirname, "/assets/vendors/JQuery"),
       '@react': path.join(__dirname, "/assets/vendors/React"),
       '@fotorama': path.join(__dirname, "/assets/vendors/fotorama"),
-      '@rangeslider': path.join(__dirname, "/assets/vendors/rangeslider")
+      '@rangeslider': path.join(__dirname, "/assets/vendors/rangeslider"),
+      '@components': path.join(__dirname, "/assets/components/")
     }
   },
 
@@ -69,7 +70,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jss$/,
+        test: /\.css$/,
+        include: path.resolve(__dirname, "assets/components"),
         use: [
           {
             loader: 'style-loader',
@@ -95,6 +97,7 @@ module.exports = {
 
       {
         test: /\.css$/,
+        exclude: path.resolve(__dirname, "assets/components"),
         use: [
           {
             loader: 'style-loader',
@@ -104,8 +107,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 1,
               sourceMap: CSS_SOURCE_MAP,
-              importLoaders: 1
             }
           },
 
@@ -123,7 +126,7 @@ module.exports = {
 
       {
         test : /\.jsx?/,
-        exclude: /\.css|jss/,
+        exclude: /\.css/,
         loader : 'babel-loader'
       }
     ]

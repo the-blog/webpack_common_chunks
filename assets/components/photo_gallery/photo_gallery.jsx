@@ -1,6 +1,5 @@
-import '@fotorama'
 import { React, ReactDOM } from '@react'
-import css from './photo_gallery.jss'
+import css from './photo_gallery.css'
 
 class PhotoGallery extends React.Component {
   render () {
