@@ -4,7 +4,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const CSS_SOURCE_MAP = false
+const globalConfig = {
+  CSS_SOURCE_MAP: false,
+  rootPath: path.join(__dirname)
+}
 
 module.exports = {
   watch: true,
@@ -47,15 +50,15 @@ module.exports = {
 
     // https://github.com/webpack/webpack/issues/4638
     new webpack.optimize.CommonsChunkPlugin({
-        async: 'jquery',
-        children: true,
-        minChunks: (m) => /node_modules\/(?:jquery|react)/.test(m.context)
+      async: 'jquery',
+      children: true,
+      minChunks: (m) => /node_modules\/(?:jquery|react)/.test(m.context)
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
-        async: 'react',
-        children: true,
-        minChunks: (m) => /node_modules\/(?:react)/.test(m.context)
+      async: 'react',
+      children: true,
+      minChunks: (m) => /node_modules\/(?:react)/.test(m.context)
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
@@ -69,55 +72,8 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        include: path.resolve(__dirname, "assets/components"),
-        use: [
-          {
-            loader: 'style-loader',
-            options: { sourceMap: CSS_SOURCE_MAP }
-          },
-
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              sourceMap: CSS_SOURCE_MAP,
-              localIdentName: '[hash:base64:5]'
-            }
-          },
-
-          {
-            loader: 'postcss-loader',
-            options: { sourceMap: CSS_SOURCE_MAP }
-          }
-        ]
-      },
-
-      {
-        test: /\.css$/,
-        exclude: path.resolve(__dirname, "assets/components"),
-        use: [
-          {
-            loader: 'style-loader',
-            options: { sourceMap: CSS_SOURCE_MAP }
-          },
-
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: CSS_SOURCE_MAP,
-            }
-          },
-
-          {
-            loader: 'postcss-loader',
-            options: { sourceMap: CSS_SOURCE_MAP }
-          }
-        ]
-      },
+      require('./webpack/rules/css').rules(globalConfig)[0],
+      require('./webpack/rules/css').rules(globalConfig)[1],
 
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
