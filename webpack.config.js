@@ -33,6 +33,8 @@ module.exports = {
   },
 
   plugins: [
+    null,
+
     new UglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
@@ -68,7 +70,7 @@ module.exports = {
 
     new AssetsPlugin(),
     // new BundleAnalyzerPlugin()
-  ],
+  ].filter(Boolean),
 
   module: {
     rules: [
