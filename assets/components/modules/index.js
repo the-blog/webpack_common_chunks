@@ -1,11 +1,4 @@
-const classicModule = require('./classic.js')
+import sum_method1 from './module.js'
 
-console.warn(classicModule)
-console.warn(classicModule())
-console.warn(new classicModule)
-
-const myModuleFu = classicModule()
-const myModuleNew = new classicModule
-
-console.warn(myModuleFu.sum(1, 2))
-console.warn(myModuleNew.sum(1, 2))
+console.warn(sum_method1)
+console.warn(sum_method1(1, 2))
