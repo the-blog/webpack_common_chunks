@@ -19,7 +19,8 @@ module.exports = {
   output: {
     publicPath: './bundles/',
     path: path.join(__dirname, 'bundles'),
-    filename: "[name].[chunkhash].js"
+    filename: "[name].[chunkhash].js",
+    chunkFilename: "[chunkhash].js"
   },
 
   resolve : {
@@ -69,7 +70,7 @@ module.exports = {
     }),
 
     new AssetsPlugin(),
-    // new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({openAnalyzer: false})
   ].filter(Boolean),
 
   module: {
