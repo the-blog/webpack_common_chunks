@@ -24,6 +24,8 @@ module.exports = {
   },
 
   resolve : {
+    extensions: [".js", ".json", ".sass", ".scss"],
+
     alias: {
       '@components':  `${globalConfig.rootPath}/assets/components/`,
       '@vendors':     `${globalConfig.rootPath}/assets/vendors`,
@@ -33,6 +35,46 @@ module.exports = {
       '@fotorama':    "@vendors/fotorama",
       '@rangeslider': "@vendors/rangeslider"
     }
+  },
+
+  module: {
+    rules: [
+      require('./webpack/rules/css').rules(globalConfig)[0],
+      require('./webpack/rules/css').rules(globalConfig)[1],
+
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
+      },
+
+      {
+        test : /\.jsx?/,
+        exclude: /\.css/,
+        loader : 'babel-loader'
+      },
+
+      {
+        test: /\.sass$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }, {
+          loader: "sass-loader"
+        }]
+      },
+
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }, {
+          loader: "sass-loader"
+        }]
+      }
+    ]
   },
 
   plugins: [
@@ -74,22 +116,4 @@ module.exports = {
     new AssetsPlugin(),
     new BundleAnalyzerPlugin({openAnalyzer: false})
   ].filter(Boolean),
-
-  module: {
-    rules: [
-      require('./webpack/rules/css').rules(globalConfig)[0],
-      require('./webpack/rules/css').rules(globalConfig)[1],
-
-      {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
-      },
-
-      {
-        test : /\.jsx?/,
-        exclude: /\.css/,
-        loader : 'babel-loader'
-      }
-    ]
-  }
-};
+}
