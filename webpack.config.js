@@ -25,11 +25,13 @@ module.exports = {
 
   resolve : {
     alias: {
-      '@jquery': path.join(__dirname, "/assets/vendors/JQuery"),
-      '@react': path.join(__dirname, "/assets/vendors/React"),
-      '@fotorama': path.join(__dirname, "/assets/vendors/fotorama"),
-      '@rangeslider': path.join(__dirname, "/assets/vendors/rangeslider"),
-      '@components': path.join(__dirname, "/assets/components/")
+      '@components':  `${globalConfig.rootPath}/assets/components/`,
+      '@vendors':     `${globalConfig.rootPath}/assets/vendors`,
+
+      '@jquery':      "@vendors/JQuery",
+      '@react':       "@vendors/React",
+      '@fotorama':    "@vendors/fotorama",
+      '@rangeslider': "@vendors/rangeslider"
     }
   },
 
