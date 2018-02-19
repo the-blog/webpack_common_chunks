@@ -95,6 +95,11 @@ module.exports = {
 
     new webpack.HashedModuleIdsPlugin(),
 
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      minChunks: Infinity
+    }),
+
     // https://github.com/webpack/webpack/issues/4638
     new webpack.optimize.CommonsChunkPlugin({
       async: 'jquery',
@@ -106,11 +111,6 @@ module.exports = {
       async: 'react',
       children: true,
       minChunks: (m) => /node_modules\/(?:react)/.test(m.context)
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest",
-      minChunks: Infinity
     }),
 
     new AssetsPlugin(),
