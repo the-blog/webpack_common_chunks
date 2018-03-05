@@ -43,8 +43,9 @@ module.exports = {
       require('./webpack/rules/css').rules(globalConfig)[1],
 
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
+        test: /\.(woff|woff2|eot|ttf|svg)$/,
+        loader: 'file-loader',
+        options: { name: "assets/[name]_[hash:6].[ext]" }
       },
 
       {
@@ -80,7 +81,7 @@ module.exports = {
   plugins: [
     null,
 
-    new UglifyJsPlugin(),
+    // new UglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
