@@ -33,7 +33,10 @@ module.exports = {
       '@jquery':      "@vendors/JQuery",
       '@react':       "@vendors/React",
       '@fotorama':    "@vendors/fotorama",
-      '@rangeslider': "@vendors/rangeslider"
+      '@rangeslider': "@vendors/rangeslider",
+
+      '@font-awesome': "./vendors/fontawesome",
+      '@bootstrap':    "./vendors/bootstrap"
     }
   },
 
@@ -43,19 +46,64 @@ module.exports = {
       require('./webpack/rules/css').rules(globalConfig)[1],
 
       {
-        test: /\.(woff|woff2|eot|ttf|svg)$/,
-        loader: 'file-loader',
-        options: { name: "assets/[name]_[hash:6].[ext]" }
+        test: /.(woff|woff2|eot|ttf)$/,
+        use: [ defaultFileLoader() ]
       },
 
       {
-        test : /\.jsx?/,
+        test: /.(png|gif|jpg|jpe?g)$/,
+        use: [
+          defaultFileLoader(),
+
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              optipng: {
+                enabled: true,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              }
+            }
+          }
+        ]
+      },
+
+      {
+        test: /.svg$/,
+        use: [
+          defaultFileLoader(),
+
+          {
+            loader: 'svgo-loader',
+
+            options: {
+              plugins: [
+                { removeTitle: true },
+                { convertColors: {shorthex: true} },
+                { convertPathData: true }
+              ]
+            }
+          }
+        ]
+      },
+
+      {
+        test : /.jsx?/,
         exclude: /\.css/,
         loader : 'babel-loader'
       },
 
       {
-        test: /\.sass$/,
+        test: /.sass$/,
         use: [{
           loader: "style-loader"
         }, {
@@ -66,7 +114,7 @@ module.exports = {
       },
 
       {
-        test: /\.scss$/,
+        test: /.scss$/,
         use: [{
           loader: "style-loader"
         }, {
@@ -81,7 +129,7 @@ module.exports = {
   plugins: [
     null,
 
-    // new UglifyJsPlugin(),
+    new UglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -117,4 +165,11 @@ module.exports = {
     new AssetsPlugin(),
     new BundleAnalyzerPlugin({openAnalyzer: false})
   ].filter(Boolean),
+}
+
+function defaultFileLoader () {
+  return {
+    loader: 'file-loader',
+    options: { name: "assets/[name]_[hash:6].[ext]" }
+  }
 }
