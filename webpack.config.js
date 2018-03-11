@@ -21,7 +21,7 @@ const globalConfig = {
 const componentsPath = globalConfig.rootPath + "/assets/components"
 
 module.exports = {
-  watch: true,
+  watch: isDev,
 
   entry: {
     index: './assets/index.js'
@@ -95,6 +95,9 @@ module.exports = {
   plugins: [
     null,
     addUglifyJsPlugin(),
+    addBundleAnalyzerPlugin(),
+
+    new AssetsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -116,26 +119,23 @@ module.exports = {
     }),
 
     // https://github.com/webpack/webpack/issues/4638
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   async: 'jquery',
-    //   children: true,
-    //   minChunks: (m) => /node_modules\/(?:jquery|react|bootstrap)/.test(m.context)
-    // }),
-    //
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   async: 'react',
-    //   children: true,
-    //   minChunks: (m) => /node_modules\/(?:react|bootstrap)/.test(m.context)
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'jquery',
+      children: true,
+      minChunks: (m) => /node_modules\/(jquery|react|bootstrap)/.test(m.context)
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'react',
+      children: true,
+      minChunks: (m) => /node_modules\/(react|bootstrap)/.test(m.context)
+    }),
     //
     // new webpack.optimize.CommonsChunkPlugin({
     //   async: 'bootstrap',
     //   children: true,
-    //   minChunks: (m) => /node_modules\/(?:bootstrap)/.test(m.context)
+    //   minChunks: (m) => /node_modules\/(bootstrap)/.test(m.context)
     // }),
-
-    new AssetsPlugin(),
-    new BundleAnalyzerPlugin({openAnalyzer: false})
   ].filter(Boolean),
 }
 
@@ -148,6 +148,11 @@ function addUglifyJsPlugin () {
 
 function nodeEnv () {
   return JSON.stringify(NODE_ENV)
+}
+
+function addBundleAnalyzerPlugin () {
+  if (!isDev) return null
+  return new BundleAnalyzerPlugin({openAnalyzer: false})
 }
 
 // LOADERS
