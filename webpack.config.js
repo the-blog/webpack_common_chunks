@@ -4,10 +4,21 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const NODE_ENV = process.env.NODE_ENV || 'development'
+
+const isDev = NODE_ENV === 'development'
+const isProd = NODE_ENV === 'production'
+const CSS_SOURCE_MAP = isDev
+
 const globalConfig = {
-  CSS_SOURCE_MAP: false,
-  rootPath: path.join(__dirname)
+  rootPath: path.join(__dirname),
+
+  isDev: isDev,
+  isProd: isProd,
+  SOURCE_MAP: CSS_SOURCE_MAP
 }
+
+const componentsPath = globalConfig.rootPath + "/assets/components"
 
 module.exports = {
   watch: true,
@@ -42,103 +53,58 @@ module.exports = {
 
   module: {
     rules: [
-      require('./webpack/rules/css').rules(globalConfig)[0],
-      require('./webpack/rules/css').rules(globalConfig)[1],
-
       {
-        test: /.(woff|woff2|eot|ttf)$/,
-        use: [ defaultFileLoader() ]
+        test: /\.css$/,
+        exclude: componentsPath,
+        use: cssLoader()
       },
 
       {
-        test: /.(png|gif|jpg|jpe?g)$/,
-        use: [
-          defaultFileLoader(),
+        test: /\.css$/,
+        include: componentsPath,
+        use: componentsCSSLoader()
+      },
 
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              },
-              optipng: {
-                enabled: true,
-              },
-              pngquant: {
-                quality: '65-90',
-                speed: 4
-              },
-              gifsicle: {
-                interlaced: false,
-              }
-            }
-          }
-        ]
+      {
+        test: /.(woff|woff2|eot|ttf)$/,
+        use: fontsLoader()
+      },
+
+      {
+        test: /.(png|gif|jpg|jpeg)$/,
+        use: imagesLoader()
       },
 
       {
         test: /.svg$/,
-        use: [
-          defaultFileLoader(),
-
-          {
-            loader: 'svgo-loader',
-
-            options: {
-              plugins: [
-                { removeTitle: true },
-                { convertColors: {shorthex: true} },
-                { convertPathData: true }
-              ]
-            }
-          }
-        ]
+        use: svgLoader()
       },
 
       {
-        test : /.jsx?/,
-        exclude: /\.css/,
-        loader : 'babel-loader'
+        test : /.(js|jsx)$/,
+        use: jsLoader()
       },
 
       {
-        test: /.sass$/,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }, {
-          loader: "sass-loader"
-        }]
-      },
-
-      {
-        test: /.scss$/,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }, {
-          loader: "sass-loader"
-        }]
+        test: /.s(a|c)ss$/,
+        use: sassLoader()
       }
     ]
   },
 
   plugins: [
     null,
-
-    new UglifyJsPlugin(),
+    addUglifyJsPlugin(),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
     }),
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: nodeEnv()
       }
     }),
 
@@ -150,26 +116,160 @@ module.exports = {
     }),
 
     // https://github.com/webpack/webpack/issues/4638
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'jquery',
-      children: true,
-      minChunks: (m) => /node_modules\/(?:jquery|react)/.test(m.context)
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      async: 'react',
-      children: true,
-      minChunks: (m) => /node_modules\/(?:react)/.test(m.context)
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   async: 'jquery',
+    //   children: true,
+    //   minChunks: (m) => /node_modules\/(?:jquery|react|bootstrap)/.test(m.context)
+    // }),
+    //
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   async: 'react',
+    //   children: true,
+    //   minChunks: (m) => /node_modules\/(?:react|bootstrap)/.test(m.context)
+    // }),
+    //
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   async: 'bootstrap',
+    //   children: true,
+    //   minChunks: (m) => /node_modules\/(?:bootstrap)/.test(m.context)
+    // }),
 
     new AssetsPlugin(),
     new BundleAnalyzerPlugin({openAnalyzer: false})
   ].filter(Boolean),
 }
 
+// HELPERS
+
+function addUglifyJsPlugin () {
+  if (isDev) return null
+  return new UglifyJsPlugin()
+}
+
+function nodeEnv () {
+  return JSON.stringify(NODE_ENV)
+}
+
+// LOADERS
+
+function fontsLoader () {
+  return [
+    defaultFileLoader()
+  ]
+}
+
+function imagesLoader () {
+  return [
+    defaultFileLoader(),
+
+    {
+      loader: 'image-webpack-loader',
+      options: {
+        mozjpeg: {
+          progressive: true,
+          quality: 65
+        },
+        optipng: {
+          enabled: true,
+        },
+        pngquant: {
+          quality: '65-90',
+          speed: 4
+        },
+        gifsicle: {
+          interlaced: false,
+        }
+      }
+    }
+  ]
+}
+
+function svgLoader() {
+  return [
+    defaultFileLoader(),
+
+    {
+      loader: 'svgo-loader',
+
+      options: {
+        plugins: [
+          { removeTitle: true },
+          { convertColors: {shorthex: true} },
+          { convertPathData: true }
+        ]
+      }
+    }
+  ]
+}
+
+function jsLoader() {
+  return [
+    { loader : 'babel-loader' }
+  ]
+}
+
+function sassLoader() {
+  return [
+    defaultStyleLoader(),
+    defaultCSSLoader(),
+    { loader: "sass-loader" }
+  ]
+}
+
+function componentsCSSLoader() {
+  return [
+    defaultStyleLoader(),
+
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1,
+        sourceMap: CSS_SOURCE_MAP,
+
+        modules: true,
+        localIdentName: '[hash:base64:5]'
+      }
+    },
+
+    defaultPostCSSLoader()
+  ]
+}
+
+function cssLoader() {
+  return [
+    defaultStyleLoader(),
+    defaultCSSLoader(),
+    defaultPostCSSLoader()
+  ]
+}
+
+function defaultStyleLoader () {
+  return {
+    loader: 'style-loader',
+    options: { sourceMap: CSS_SOURCE_MAP }
+  }
+}
+
 function defaultFileLoader () {
   return {
     loader: 'file-loader',
     options: { name: "assets/[name]_[hash:6].[ext]" }
+  }
+}
+
+function defaultPostCSSLoader () {
+  return {
+    loader: 'postcss-loader',
+    options: { sourceMap: CSS_SOURCE_MAP }
+  }
+}
+
+function defaultCSSLoader () {
+  return {
+    loader: 'css-loader',
+    options: {
+      importLoaders: 1,
+      sourceMap: CSS_SOURCE_MAP,
+    }
   }
 }

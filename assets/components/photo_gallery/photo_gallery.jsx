@@ -3,7 +3,7 @@ import css from './photo_gallery.css'
 
 class PhotoGallery extends React.Component {
   render () {
-    return <div class={css.gallery} id='gallery'>
+    return <div className={css.gallery} id='gallery'>
       <img src='http://s.fotorama.io/1.jpg' />
       <img src='http://s.fotorama.io/2.jpg' />
       <img src='http://s.fotorama.io/3.jpg' />
